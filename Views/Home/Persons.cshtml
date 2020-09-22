@@ -1,0 +1,40 @@
+﻿@model List<PersonalDetail>
+@{
+    ViewData["Title"] = "Person collection in our list";
+}
+
+<h1>Persons</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Personal Detail Id</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Occupation</th>
+            <th>Speciality</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var person in Model)
+        {
+        <tr>
+            <td>@person.PersonalDetailId</td>
+            <td>@person.FirstName</td>
+            <td>@person.Address</td>
+            <th>@person.Occupation</th>
+            @*@if (person.Occupation == "Doctor")
+            {
+                <td>@person.</td>
+            }
+            else if (person.Occupation == "Studet")
+            {
+                <td></td>
+            }
+            else
+            {
+                <td></td>
+            }*@
+        </tr>
+        }
+    </tbody>
+</table>
