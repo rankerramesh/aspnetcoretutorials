@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "O9duXEU6ERiSU1gz70qF2WoPHISEj33OLgyJtUCeAWjBvsdofGwSg23+JJEnbw8IVLOMnE3+OnKu9xASsEHx9A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\prajin\\source\\repos\\GradingApp\\GradingApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\prajin\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512"
+  ],
+  "logs": []
+}
