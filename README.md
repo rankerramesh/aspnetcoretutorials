@@ -1,6 +1,6 @@
 # ASP.NET Core Tutorials - Bhaktapur Multiple Campus - 6th Semester 
 
-1. [C# Fundamentals]()
+1. [C# Fundamentals](https://github.com/prajinkhadka/aspnetcoretutorials/tree/master/C%23%20Fundamentals/Grading_App/GradingApp/src/GradeBook)
       - GradingApp :
       
           - Simple app that takes <List> as input with books and  price. 
@@ -13,7 +13,7 @@
             - Write Unit tests
             and more....
           
-2. [.netcore]()
+2. [.Netcore]()
 
 
 3. Chapter wise :
