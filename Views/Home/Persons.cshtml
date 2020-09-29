@@ -1,13 +1,15 @@
 ﻿@model List<PersonalDetail>
 @{
     ViewData["Title"] = "Person collection in our list";
+    int counter = 1;
 }
 
 <h1>Persons</h1>
+@Html.ActionLink("Add New Person Detail", "CretePersonDetail", "Home", null, new { @class="btn btn-primary"})
 <table border="1">
     <thead>
         <tr>
-            <th>Personal Detail Id</th>
+            <th>SN.</th>
             <th>Name</th>
             <th>Address</th>
             <th>Occupation</th>
@@ -18,15 +20,17 @@
         @foreach(var person in Model)
         {
         <tr>
-            <td>@person.PersonalDetailId</td>
+            <td>@counter</td>
             <td>@person.FirstName</td>
             <td>@person.Address</td>
             <td>@person.Occupation</td>
             <td>
                 @Html.ActionLink("View", "PersonalDetail", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-info" })
                 @Html.ActionLink("Edit", "PersonalDetailEdit", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Delete", "PersonalDetailDelete", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-secondary" })
             </td>
         </tr>
+            counter++;
         }
     </tbody>
 </table>

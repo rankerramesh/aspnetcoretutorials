@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,11 +15,19 @@ namespace TestingNetNetCore.Models
         }
 
         public int PersonalDetailId { get; set; }
+        [Required(ErrorMessage ="Name is required !!")]
 
-        [DisplayName("First Name")]
+        [DisplayName("Full Name *")]
         public string FirstName { get; set; }
         public string Address { get; set; }
+
+        [Range(18,30,ErrorMessage = "Value is not in range")]
+        [Required]
+        [DisplayName("Age *")]
         public int Age { get; set; }
+
+        [DisplayName("Profession")]
+        [MinLength(5),MaxLength(10)]
         public string Occupation { get; set; }
 
     }
