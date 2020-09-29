@@ -6,14 +6,15 @@
 <h1>PersonalDetail</h1>
 <h2>Here is my personal details</h2>
 
+@Html.ActionLink("Person List", "Persons","Home",null, new { @class = "btn btn-primary" })
 <table border="1">
     <tr>
         <td>Particular</td>
         <td>Details</td>
     </tr>
     <tr>
-        <td>@Html.DisplayNameFor(x=>x.FirstName)</td>
-        <td>@Html.DisplayFor(x=>Model.FirstName)</td>
+        <td>@Html.DisplayNameFor(x => x.FirstName)</td>
+        <td>@Html.DisplayFor(x => Model.FirstName)</td>
     </tr>
     <tr>
         <td>@Html.DisplayNameFor(x => x.Address)</td>
@@ -27,6 +28,6 @@
         <td>@Html.DisplayNameFor(x => x.Occupation)</td>
         <td>@Html.DisplayFor(x => Model.Occupation)</td>
     </tr>
-    
+
 </table>
 

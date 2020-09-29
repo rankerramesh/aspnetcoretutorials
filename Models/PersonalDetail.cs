@@ -8,10 +8,9 @@ namespace TestingNetNetCore.Models
 {
     public class PersonalDetail
     {
-        public PersonalDetail(List<PersonalDetail> persons)
+        public PersonalDetail()
         {
-            int personCount = persons.Count;
-            PersonalDetailId = personCount + 1;
+            
         }
 
         public int PersonalDetailId { get; set; }
@@ -27,7 +26,7 @@ namespace TestingNetNetCore.Models
     public class DoctorProfile : PersonalDetail
     {
 
-        public DoctorProfile(List<PersonalDetail> persons) : base(persons)
+        public DoctorProfile(List<PersonalDetail> persons) : base()
         {
         }
         public string Qualification { get; set; }
@@ -37,7 +36,7 @@ namespace TestingNetNetCore.Models
     }
     public class TeacherProfile : PersonalDetail
     {
-        public TeacherProfile(List<PersonalDetail> persons) : base(persons)
+        public TeacherProfile(List<PersonalDetail> persons) : base()
         {
         }
         public string Qualification { get; set; }
@@ -46,7 +45,7 @@ namespace TestingNetNetCore.Models
     }
     public class StudentProfile : PersonalDetail
     {
-        public StudentProfile(List<PersonalDetail> persons) : base(persons)
+        public StudentProfile(List<PersonalDetail> persons) : base()
         {
         }
         public string Faculty { get; set; }

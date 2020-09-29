@@ -11,7 +11,7 @@
             <th>Name</th>
             <th>Address</th>
             <th>Occupation</th>
-            <th>Speciality</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -21,19 +21,11 @@
             <td>@person.PersonalDetailId</td>
             <td>@person.FirstName</td>
             <td>@person.Address</td>
-            <th>@person.Occupation</th>
-            @*@if (person.Occupation == "Doctor")
-            {
-                <td>@person.</td>
-            }
-            else if (person.Occupation == "Studet")
-            {
-                <td></td>
-            }
-            else
-            {
-                <td></td>
-            }*@
+            <td>@person.Occupation</td>
+            <td>
+                @Html.ActionLink("View", "PersonalDetail", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Edit", "PersonalDetailEdit", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-secondary" })
+            </td>
         </tr>
         }
     </tbody>

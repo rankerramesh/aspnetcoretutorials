@@ -25,20 +25,19 @@ namespace TestingNetNetCore.Controllers
             //add items to list
             //hari as a doctor
             //inherit from profiledetail
-            DoctorProfile hari = new DoctorProfile(detailList);
+            PersonalDetail hari = new PersonalDetail();
+            hari.PersonalDetailId = 1;
             hari.FirstName = "Hari Krishna";
             hari.Address = "Gothatar, Kathmandu";
             hari.Age = 56;
             hari.Occupation = "Doctor";
-            //doctor profile specific property
-            hari.HospitalClinic = "bir hospital, om hospital, bidh lab ";
-            hari.Qualification = "MD";
-            hari.Speciality = "Dermatologist";
+            
             detailList.Add(hari);
 
 
             //sanil as a farmer
-            PersonalDetail sanil = new PersonalDetail(detailList);
+            PersonalDetail sanil = new PersonalDetail();
+            sanil.PersonalDetailId = 2;
             sanil.FirstName = "Sanil Desemaru";
             sanil.Address = "Dudhpati, Bhaktapur";
             sanil.Age = 24;
@@ -47,7 +46,8 @@ namespace TestingNetNetCore.Controllers
 
 
             //adit as a farmer
-            PersonalDetail adit = new PersonalDetail(detailList);
+            PersonalDetail adit = new PersonalDetail();
+            adit.PersonalDetailId = 3;
             adit.FirstName = "Adit Dahal";
             adit.Address = "Dudhpati, Bhaktapur";
             adit.Age = 24;
@@ -56,39 +56,36 @@ namespace TestingNetNetCore.Controllers
 
 
             //bhanu as a student
-            StudentProfile bhanu = new StudentProfile(detailList);
+            PersonalDetail bhanu = new PersonalDetail();
+            bhanu.PersonalDetailId = 4;
             bhanu.FirstName = "Bhanu Shrestha";
             bhanu.Address = "Dudhpati, Bhaktapur";
             bhanu.Age = 24;
             bhanu.Occupation = "Student";
-            // student specific property
-            bhanu.College_School = "Bhaktapur Multiple Campus";
-            bhanu.Faculty = "Science and Technology";
+            
             detailList.Add(bhanu);
 
 
             // saurav as a student
-            StudentProfile saurav = new StudentProfile(detailList);
+            PersonalDetail saurav = new PersonalDetail();
+            saurav.PersonalDetailId = 5;
             saurav.FirstName = "Saurav Dhami";
             saurav.Address = "Gothatar, Kathmandu";
             saurav.Age = 56;
             saurav.Occupation = "Student";
-            // student specific property
-            saurav.College_School = "Bhaktapur Multiple Campus";
-            saurav.Faculty = "Science and Technology";
+           
             detailList.Add(saurav);
 
 
 
             //nikita as a student
-            StudentProfile nikita = new StudentProfile(detailList);
+            PersonalDetail nikita = new PersonalDetail();
+            nikita.PersonalDetailId = 6;
             nikita.FirstName = "Nikita Shrestha";
             nikita.Address = "Gothatar, Kathmandu";
             nikita.Age = 56;
             nikita.Occupation = "Student";
-            // student specific property
-            nikita.College_School = "Bhaktapur Multiple Campus";
-            nikita.Faculty = "Science and Technology";
+           
             detailList.Add(nikita);
 
         }
@@ -118,40 +115,24 @@ namespace TestingNetNetCore.Controllers
         {
             return View(detailList);
         }
-        public IActionResult PersonalDetail(string person)
+        public IActionResult PersonalDetail(int personDetailId)
         {
-
-            //this information can be accessed from database
-
-            //hari
-            PersonalDetail hari = new PersonalDetail(detailList);
-            hari.FirstName = "Hari Krishna";
-            hari.Address = "Gothatar, Kathmandu";
-            hari.Age = 56;
-            hari.Occupation = "Trader";
-
-
-
-            //bhanu
-            PersonalDetail bhanu = new PersonalDetail(detailList);
-            bhanu.FirstName = "Bhanu Shrestha";
-            bhanu.Address = "Dudhpati, Bhaktapur";
-            bhanu.Age = 24;
-            bhanu.Occupation = "Student";
-
-
-            PersonalDetail personDetail = new PersonalDetail(detailList);
-            if (person == "Hari Krishna")
-            {
-                personDetail = hari;
-            }
-            else if (person == "Bhanu Shrestha")
-            {
-                personDetail = bhanu;
-            }
-            return View("PersonalDetails", personDetail);
+            PersonalDetail pdetail = new PersonalDetail();
+            pdetail = detailList.Where(x => x.PersonalDetailId == personDetailId).FirstOrDefault();
+            return View(pdetail);
+        }
+        public IActionResult PersonalDetailEdit(int personDetailId)
+        {
+            PersonalDetail pdetail = new PersonalDetail();
+            pdetail = detailList.Where(x => x.PersonalDetailId == personDetailId).FirstOrDefault();
+            return View(pdetail);
         }
 
-
+        [HttpPost]
+        public IActionResult PersonalDetailEdit(PersonalDetail pd)
+        {
+            pd = new PersonalDetail();
+            return View();
+        }
     }
 }
