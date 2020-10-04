@@ -1,0 +1,39 @@
+﻿@model PersonalDetail
+@{
+    ViewData["Title"] = "EditPerson";
+}
+
+<h1>EditPerson</h1>
+
+
+@using (Html.BeginForm("EditPersonDetail", "NistTutorial", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.PersonalDetailId)
+    <table>
+        <tr>
+            <td colspan="2">
+                Please edit your Data
+            </td>
+
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>@Html.TextBoxFor(x => x.FirstName)</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>@Html.TextBoxFor(x => x.Address)</td>
+        </tr>
+        <tr>
+            <td>Occupation</td>
+            <td>@Html.TextBoxFor(x => x.Occupation)</td>
+        </tr>
+
+
+
+        <tr>
+            <td colspan="2"><button type="submit" class="btn btn-secondary">Edit Detail</button></td>
+        </tr>
+    </table>
+}
+

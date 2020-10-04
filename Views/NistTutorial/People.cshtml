@@ -1,0 +1,42 @@
+﻿@model List<PersonalDetail>
+@{
+    ViewData["Title"] = "People";
+    int counter = 1;
+}
+
+<h1>People</h1>
+
+<p><a asp-controller="NistTutorial" asp-action="AddPerson" class="btn btn-primary"> Add Person </a> </p>
+@if (Model.Count == 0)
+{
+    <p>No Data Found !!</p>
+}
+else
+{
+    <table border="1">
+        <tr>
+            <td>SN</td>
+            <td>Name</td>
+            <td>Address</td>
+            <td>Occupation</td>
+            <td>Date of Birth</td>
+            <td>Action</td>
+        </tr>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>@counter</td>
+                <td>@person.FirstName</td>
+                <td>@person.Address</td>
+                <td>@person.Occupation</td>
+                <td>@person.DOB</td>
+                <td>
+                    <a asp-controller="NistTutorial" asp-action="EditPerson" asp-route-personDetailId="@person.PersonalDetailId" class="btn btn-primary">Edit</a>
+                    <a asp-controller="NistTutorial" asp-action="DeletePerson" asp-route-personDetailId="@person.PersonalDetailId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            counter++;
+        }
+    </table>
+
+}

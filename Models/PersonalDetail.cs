@@ -15,20 +15,30 @@ namespace TestingNetNetCore.Models
         }
 
         public int PersonalDetailId { get; set; }
-        [Required(ErrorMessage ="Name is required !!")]
 
-        [DisplayName("Full Name *")]
+        [DisplayName("First Name")]
+        [Required]
+        [MaxLength(20),MinLength(3)]
         public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        [Required]
+        [MaxLength(50), MinLength(5)]
         public string Address { get; set; }
 
-        [Range(18,30,ErrorMessage = "Value is not in range")]
-        [Required]
-        [DisplayName("Age *")]
-        public int Age { get; set; }
+        
+        public Nullable<int> Age { get; set; }
 
         [DisplayName("Profession")]
-        [MinLength(5),MaxLength(10)]
+        [Required]
+        [MaxLength(50), MinLength(5)]
         public string Occupation { get; set; }
+        public decimal Weight { get; set; }
+        public DateTime DOB { get; set; }
+        
 
     }
 
