@@ -50,12 +50,12 @@ namespace TestingNetNetCore.Controllers
         {
             return View(PersonMemory.GetPersons());
         }
-        public ObjectResult PersonalDetail(int personDetailId)
+        public IActionResult PersonalDetail(int personDetailId)
         {
             PersonalDetail pdetail = new PersonalDetail();
             pdetail = PersonMemory.GetPersons().Where(x => x.PersonalDetailId == personDetailId).FirstOrDefault();
-            //return View("PersonalDetails",pdetail);
-            return new ObjectResult(pdetail);
+            return View(pdetail);
+            //return new ObjectResult(pdetail);
         }
         public ViewResult PersonalDetailEdit(int personDetailId)
         {
@@ -105,6 +105,113 @@ namespace TestingNetNetCore.Controllers
             PersonMemory.GetPersons().Remove(person);
             return RedirectToAction("Persons");
         }
+
+        //20201005
+        #region 2020105
+
+        public IActionResult GetSumOfNumbers(PersonalDetail pd)
+        {
+            Int16 firstNumber;
+            Int16 secondNumber;
+            Int16 sumOfNumbers = 0;
+            Int16 divisor = 1;
+            Int16 dividend = 0;
+            string stringNumber = "125a";
+            //PersonalDetail pd;
+            //max 32767
+            try
+            {
+                List<Int16> integerList= new List<Int16>();
+                integerList.Add(1234);
+
+                firstNumber = Convert.ToInt16(1234);
+                secondNumber = integerList[0];
+                sumOfNumbers = Convert.ToInt16(firstNumber + secondNumber);
+                dividend = Convert.ToInt16(firstNumber / divisor);
+                divisor =Convert.ToInt16(stringNumber);
+                string name = pd.Address;
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                return Json(new { ExceptionMessage = ex.Message });
+            }
+            catch (NullReferenceException ex)
+            {
+                return Json(new { ExceptionMessage = ex.Message });
+            }
+            catch (OutOfMemoryException ex)
+            {
+                //we have 4 gb
+                //current process consuming 2 gb
+                //clean
+
+                return Json(new { ExceptionMessage = ex.Message });
+            }
+            
+            catch (DivideByZeroException ex)
+            {
+                return Json(new { ExceptionMessage = ex.Message });
+            }
+            catch (FormatException ex)
+            {
+                return Json(new { ExceptionMessage = "Please enter valid age !!" });
+            }
+            catch (InvalidCastException ex)
+            {
+                return Json(new { ExceptionMessage = ex.Message });
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return Json(new { ExceptionMessage = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ExceptionMessage = ex.Message });
+
+            }
+            finally
+            {
+                sumOfNumbers += 10;
+            }
+
+            return Json(new { sum = sumOfNumbers });
+        }
+        public ActionResult CheckPerformanceOfTryCatch()
+        {
+            TimeSpan a;
+            TimeSpan b;
+            Stopwatch w = new Stopwatch();
+            double d = 0;
+
+            w.Start();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                try
+                {
+                    d = Math.Sin(Convert.ToInt32("abcd"));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
+            w.Stop();
+            a=w.Elapsed;
+            w.Reset();
+            w.Start();
+
+            for (int i = 0; i < 10000000; i++)
+            {
+                d = Math.Sin(1);
+            }
+
+            w.Stop();
+            b=w.Elapsed;
+            return Json(new {withtrycatch=a, withouttrycatch=b });
+        }
+        #endregion
     }
 
 }

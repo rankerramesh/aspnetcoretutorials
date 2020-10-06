@@ -43,20 +43,20 @@
                     fullName = person.FirstName.Substring(0, 1) + " " + (person.MiddleName == null ? "" : person.MiddleName.Substring(0, 1) + " ").ToUpper() + person.LastName;
                 }
             }
-            <tr>
-                <td>@counter</td>
-                <td>@fullName </td>
-                <td>@person.Address</td>
-                <td>@person.Occupation</td>
-                <td>@PersonMemory.GetDateInFormat(person.DOB)</td>
-                <td>@PersonMemory.GetDateInFormat(System.DateTime.Now)</td>
-                <td>@System.DateTime.Now.ToString("hh-mm-ss")</td>
-                <td>
-                    @Html.ActionLink("View", "PersonalDetail", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-info" })
-                    @Html.ActionLink("Edit", "PersonalDetailEdit", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-secondary" })
-                    @Html.ActionLink("Delete", "PersonalDetailDelete", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-secondary" })
-                </td>
-            </tr>
+        <tr>
+            <td>@counter</td>
+            <td>@fullName </td>
+            <td>@person.Address</td>
+            <td>@person.Occupation</td>
+            <td>@PersonMemory.GetDateInFormat(person.DOB)</td>
+            <td>@PersonMemory.GetDateInFormat(System.DateTime.Now)</td>
+            <td>@System.DateTime.Now.ToString("hh-mm-ss")</td>
+            <td>
+                @Html.ActionLink("View", "PersonalDetail", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Edit", "PersonalDetailEdit", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Delete", "PersonalDetailDelete", "Home", new { personDetailId = person.PersonalDetailId }, new { @class = "btn btn-secondary" })
+            </td>
+        </tr>
             counter++;
         }
     </tbody>

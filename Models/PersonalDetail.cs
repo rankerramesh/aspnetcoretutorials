@@ -18,7 +18,7 @@ namespace TestingNetNetCore.Models
 
         [DisplayName("First Name")]
         [Required]
-        [MaxLength(20),MinLength(3)]
+        [MaxLength(20), MinLength(3)]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
 
@@ -38,8 +38,7 @@ namespace TestingNetNetCore.Models
         public string Occupation { get; set; }
         public decimal Weight { get; set; }
         public DateTime DOB { get; set; }
-        
-
+        public string ImageLocation { get; set; }
     }
 
     public class DoctorProfile : PersonalDetail

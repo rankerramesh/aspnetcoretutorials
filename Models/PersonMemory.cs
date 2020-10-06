@@ -24,6 +24,7 @@ namespace TestingNetNetCore.Models
                 hari.Age = 56;
                 hari.Occupation = "Doctor";
                 hari.DOB = new DateTime(1995, 12, 05);
+                hari.ImageLocation = "~/Images/boy.jpg";
                 detailList.Add(hari);
 
 
@@ -94,6 +95,7 @@ namespace TestingNetNetCore.Models
         public static string GetDateInFormat(DateTime dt)
         {
             return dt.ToString("yyyy-MM-dd");
+            //return dt.ToString();
         }
     }
 }
