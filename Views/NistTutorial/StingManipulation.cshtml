@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "StingManipulation";
+    string name = "DiPendra karki";
+    string requiredSurname = "karki";
+
+    DateTime currentDate = DateTime.Now;
+
+    List<string> NameList = new List<string>();
+    NameList.Add("Dependra karki");
+    NameList.Add("arati thapa");
+    NameList.Add("arun dhungel");
+    NameList.Add("sagar dhonju");
+    NameList.Add("sameep banjara");
+}
+
+<h1>Sting    Manipulation</h1>
+
+@{
+    <table border="1">
+        <tr>
+            <td>
+                The length of String is:
+            </td>
+            <td>@name.Length</td>
+        </tr>
+        <tr>
+            <td>
+                the capital, lower  case is :
+            </td>
+            <td>
+                @name.ToUpper() ,  @name.ToLower()
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Names that starts from "A"
+            </td>
+            <td>
+                @foreach (string nam in NameList.Where(x => x.StartsWith("a")))
+                {
+                    <span>@nam.ToUpper() ,</span>
+                }
+            </td>
+
+        </tr>
+        <tr>
+            <td>2nd and 5th letter of Name is  </td>
+            <td>@name[1] , @name[4] @name</td>
+        </tr>
+        <tr>
+            <td>
+                comparing two strings using compare to
+            </td>
+            <td> @name.CompareTo("dipendra karki")</td>
+        </tr>
+        <tr>
+            <td>
+                comparing two strings using equals to
+            </td>
+            <td> @name.ToUpper().Equals(("dipendra karki").ToUpper())</td>
+        </tr>
+        <tr>
+            <td>
+                current date
+            </td>
+            <td>
+                @currentDate.ToLongDateString()   @currentDate.TimeOfDay  @currentDate.ToString("yyyy-MM-dd")  @currentDate.ToString()
+            </td>
+        </tr>
+    </table>
+
+}
+

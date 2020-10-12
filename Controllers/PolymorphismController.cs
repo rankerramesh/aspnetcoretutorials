@@ -10,22 +10,38 @@ namespace TestingNetNetCore.Controllers
     {
         public IActionResult Index()
         {
-            Calculator cal = new Calculator();
-            int thirdAddMethod = cal.Add(155, Convert.ToDecimal(100.5));
+            ICalculator cal = new Calculator();
             int firstAddMethod = cal.Add(150, 100);
             int secondAddMethod = cal.Add(150, 100, 50);
-
+            int thirdAddMethod = cal.Add(155, Convert.ToDecimal(100.5));
             return Json(new { firstAddMethod = firstAddMethod, secondadd = secondAddMethod, thirdadd = thirdAddMethod });
+            
+        }
+        public IActionResult AbstractIndex()
+        {
+            
+            AbstractCalculator cal = new NormalClass();
+            int abstractMethod = cal.Add(150, 100);
+            int nonAbstractMethod = cal.add(100, 200, 300);
+            return Json(new { abstractMethodResult = abstractMethod, nonAbstractMethodResult= nonAbstractMethod });
         }
 
         public IActionResult Override()
         {
             ScientificCalculator sc = new ScientificCalculator();
             int result = sc.GetDifference(100, 200);
+            int addResult = sc.Add(10, 12);
             return Json(result);
         }
     }
-    public class Calculator
+
+    public interface ICalculator
+    {
+        int Add(int firstNumber, int secondNumber);
+        int Add(int firstNumber, int secondNumber, int thirdNumber);
+        int Add(decimal firstNumber, decimal secondNumber);
+    }
+    public class Calculator : ICalculator
     {
         public int Add(int firstNumber, int secondNumber)
         {
@@ -43,6 +59,10 @@ namespace TestingNetNetCore.Controllers
     }
     public class GeneralCalculator
     {
+        public GeneralCalculator()
+        {
+
+        }
         public virtual int Add(int firstNumber, int secondNumber)
         {
             return firstNumber + secondNumber;
@@ -55,10 +75,21 @@ namespace TestingNetNetCore.Controllers
 
     public class ScientificCalculator : GeneralCalculator
     {
+        public ScientificCalculator() : base()
+        {
+
+        }
         public override int Add(int firstNumber, int secondNumber)
         {
-            return Convert.ToInt32(firstNumber + secondNumber);
+            var result = base.Add(firstNumber, secondNumber);
+            var secondResult = base.GetDifference(firstNumber, secondNumber);
+            return Convert.ToInt32(result);
         }
+
+        //public  int Add(int firstNumber, int secondNumber)
+        //{
+        //    return firstNumber + secondNumber;
+        //}
 
         public override int GetDifference(int firstNumber, int secondNumber)
         {
@@ -73,5 +104,27 @@ namespace TestingNetNetCore.Controllers
             }
             return result;
         }
+
+
+    }
+    public abstract class AbstractCalculator
+    {
+        public abstract  int Add(int firstN, int secondN);
+        public int add(int x,int y, int z)
+        {
+            return x + y + z;
+        }
+        
+    }
+    public class NormalClass:AbstractCalculator
+    {
+        public override  int Add(int firstN, int secondN)
+        {
+            return firstN + secondN;
+        }
+        //public override int add(int x, int y, int z)
+        //{
+        //    return base.add(x, y, z);
+        //}
     }
 }

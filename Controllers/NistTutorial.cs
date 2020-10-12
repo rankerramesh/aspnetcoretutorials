@@ -68,5 +68,31 @@ namespace TestingNetNetCore.Controllers
             people.Remove(pd);
             return RedirectToAction("People");
         }
+
+        public IActionResult StingManipulation()
+        {
+            return View();
+
+        }
+
+        public IActionResult OverLoading()
+        {
+            int result = Add(10, 20,30,40);
+            return Json(result);
+        }
+        public int Add(int x, int y)
+        {
+            return x + y;
+        }
+        public int Add(int x, int y,int z)
+        {
+            return x + y+z;
+        }
+
+        public int Add(int x, int y, int z,int a)
+        {
+            return x + y + z+a;
+        }
+
     }
 }

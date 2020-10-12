@@ -22,7 +22,6 @@ namespace TestingNetNetCore.Models
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
 
-        [Required]
         public string LastName { get; set; }
 
         [Required]
@@ -38,7 +37,11 @@ namespace TestingNetNetCore.Models
         public string Occupation { get; set; }
         public decimal Weight { get; set; }
         public DateTime DOB { get; set; }
+
+        [DisplayName("Profile Image")]
         public string ImageLocation { get; set; }
+
+        public string ErrorMsg { get; set; }
     }
 
     public class DoctorProfile : PersonalDetail

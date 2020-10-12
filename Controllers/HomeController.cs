@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -14,18 +16,15 @@ namespace TestingNetNetCore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private IConfiguration _iConfig;
-        public HomeController(ILogger<HomeController> logger, IConfiguration iConfig)
+        private IWebHostEnvironment _env;
+        public HomeController(ILogger<HomeController> logger, IConfiguration iConfig, IWebHostEnvironment env)
         {
             _logger = logger;
             _iConfig = iConfig;
-
-
-
-
-
+            _env = env;
         }
-
-
+        
+        
         public IActionResult Index()
         {
             ViewBag.MyKey = _iConfig["MyKey"];
@@ -69,12 +68,27 @@ namespace TestingNetNetCore.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (Request.Form.Files["profile-image"] != null)
+                {
+                    //saving
+                    if (Request.Form.Files["profile-image"].Length > 10 * 1024 * 1024)
+                    {
+                        pd.ErrorMsg = "File Size not valid !!";
+                        return View(pd);
+                    }
+                    string pathToFolder = Path.Combine(_env.WebRootPath, "uploadedfiles", Request.Form.Files["profile-image"].FileName);
+
+                    var fileStream = new FileStream(pathToFolder, FileMode.Create);
+                    Request.Form.Files["profile-image"].CopyTo(fileStream);
+                    pd.ImageLocation = "uploadedfiles/"+ Request.Form.Files["profile-image"].FileName;
+                }
                 //reference type variable
                 var personInList = PersonMemory.GetPersons().Where(x => x.PersonalDetailId == pd.PersonalDetailId).FirstOrDefault();
                 personInList.FirstName = pd.FirstName;
                 personInList.Occupation = pd.Occupation;
                 personInList.Age = pd.Age;
                 personInList.Address = pd.Address;
+                personInList.ImageLocation = pd.ImageLocation;
                 return RedirectToAction("Persons");
             }
             else
@@ -92,6 +106,21 @@ namespace TestingNetNetCore.Controllers
         [HttpPost]
         public ActionResult CretePersonDetail(PersonalDetail pd)
         {
+
+            if(Request.Form.Files["profile-image"]!=null)
+            {
+                //saving
+                if(Request.Form.Files["profile-image"].Length> 10*1024*1024)
+                {
+                    pd.ErrorMsg = "File Size not valid !!";
+                    return View(pd); 
+                }
+                string pathToFolder = Path.Combine(_env.WebRootPath, "uploadedfiles", Request.Form.Files["profile-image"].FileName);
+
+                var fileStream = new FileStream(pathToFolder, FileMode.Create);
+                Request.Form.Files["profile-image"].CopyTo(fileStream);
+                pd.ImageLocation = pathToFolder;
+            }
             var persondetailList = PersonMemory.GetPersons();
             int currentPersonCount = persondetailList.Count;
             currentPersonCount = currentPersonCount + 1;
