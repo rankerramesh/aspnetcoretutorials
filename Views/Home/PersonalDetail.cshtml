@@ -13,10 +13,21 @@
         <td>Details</td>
     </tr>
     <tr>
-        <td>
+        @*<td>
             <img src="@Url.Content("~/"+Model.ImageLocation)" />
+        </td>*@
+        <td>
+            @if (!string.IsNullOrEmpty(Model.ImageLocation))
+            {
+                <a target="_blank" href="@Url.Content("~/"+Model.ImageLocation)">Click to Download/View</a>
+            }
         </td>
-        
+        <td>
+            @if (!string.IsNullOrEmpty(Model.ImageLocation))
+            {
+                <a target="_blank" href="@Url.Action("DownloadFile","Home",new{personId=Model.PersonalDetailId })">Click to Download/View</a>
+            }
+        </td>
     </tr>
     <tr>
         <td>@Html.DisplayNameFor(x => x.FirstName)</td>

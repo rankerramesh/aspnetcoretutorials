@@ -23,8 +23,8 @@ namespace TestingNetNetCore.Controllers
             _iConfig = iConfig;
             _env = env;
         }
-        
-        
+
+
         public IActionResult Index()
         {
             ViewBag.MyKey = _iConfig["MyKey"];
@@ -64,7 +64,7 @@ namespace TestingNetNetCore.Controllers
         }
 
         [HttpPost]
-        public ActionResult PersonalDetailEdit(PersonalDetail pd)
+        public async Task<ActionResult> PersonalDetailEdit(PersonalDetail pd)
         {
             if (ModelState.IsValid)
             {
@@ -79,8 +79,12 @@ namespace TestingNetNetCore.Controllers
                     string pathToFolder = Path.Combine(_env.WebRootPath, "uploadedfiles", Request.Form.Files["profile-image"].FileName);
 
                     var fileStream = new FileStream(pathToFolder, FileMode.Create);
-                    Request.Form.Files["profile-image"].CopyTo(fileStream);
-                    pd.ImageLocation = "uploadedfiles/"+ Request.Form.Files["profile-image"].FileName;
+
+                    //await Task.Run(() >{
+                    await Request.Form.Files["profile-image"].CopyToAsync(fileStream);
+                    //});
+
+                    pd.ImageLocation = "uploadedfiles/" + Request.Form.Files["profile-image"].FileName;
                 }
                 //reference type variable
                 var personInList = PersonMemory.GetPersons().Where(x => x.PersonalDetailId == pd.PersonalDetailId).FirstOrDefault();
@@ -107,19 +111,23 @@ namespace TestingNetNetCore.Controllers
         public ActionResult CretePersonDetail(PersonalDetail pd)
         {
 
-            if(Request.Form.Files["profile-image"]!=null)
+            if (Request.Form.Files["profile-image"] != null)
             {
                 //saving
-                if(Request.Form.Files["profile-image"].Length> 10*1024*1024)
+                if (Request.Form.Files["profile-image"].Length > 10 * 1024 * 1024)
                 {
                     pd.ErrorMsg = "File Size not valid !!";
-                    return View(pd); 
+                    return View(pd);
                 }
                 string pathToFolder = Path.Combine(_env.WebRootPath, "uploadedfiles", Request.Form.Files["profile-image"].FileName);
 
-                var fileStream = new FileStream(pathToFolder, FileMode.Create);
-                Request.Form.Files["profile-image"].CopyTo(fileStream);
-                pd.ImageLocation = pathToFolder;
+                using (var fileStreams = new FileStream(pathToFolder, FileMode.Create))
+                {
+                    Request.Form.Files["profile-image"].CopyTo(fileStreams);
+                    pd.ImageLocation = pathToFolder;
+                    fileStreams.Flush();
+                }
+
             }
             var persondetailList = PersonMemory.GetPersons();
             int currentPersonCount = persondetailList.Count;
@@ -127,6 +135,23 @@ namespace TestingNetNetCore.Controllers
             pd.PersonalDetailId = currentPersonCount;
             persondetailList.Add(pd);
             return RedirectToAction("Persons");
+        }
+
+        //public IActionResult DownloadFile(int personId)
+        //{
+        //    string downlloadPath = PersonMemory.GetPersons().Where(x => x.PersonalDetailId == personId).FirstOrDefault().ImageLocation;
+        //return File()
+
+        //}
+
+        public FileResult DownloadFile(int personId)
+        {
+            string downlloadPath = PersonMemory.GetPersons().Where(x => x.PersonalDetailId == personId).FirstOrDefault().ImageLocation;
+            //string[] extension = downlloadPath.Split('/');
+            //string filename = extension[2].ToString();
+            string pathToFolder = Path.Combine(_env.WebRootPath, downlloadPath);
+            var fileStream = new FileStream(pathToFolder, FileMode.Open);
+            return File(fileStream, "image/jpeg", "downloadedfile.jpg");
         }
         public IActionResult PersonalDetailDelete(int personDetailId)
         {
@@ -150,14 +175,14 @@ namespace TestingNetNetCore.Controllers
             //max 32767
             try
             {
-                List<Int16> integerList= new List<Int16>();
+                List<Int16> integerList = new List<Int16>();
                 integerList.Add(1234);
 
                 firstNumber = Convert.ToInt16(1234);
                 secondNumber = integerList[0];
                 sumOfNumbers = Convert.ToInt16(firstNumber + secondNumber);
                 dividend = Convert.ToInt16(firstNumber / divisor);
-                divisor =Convert.ToInt16(stringNumber);
+                divisor = Convert.ToInt16(stringNumber);
                 string name = pd.Address;
             }
             catch (IndexOutOfRangeException ex)
@@ -176,7 +201,7 @@ namespace TestingNetNetCore.Controllers
 
                 return Json(new { ExceptionMessage = ex.Message });
             }
-            
+
             catch (DivideByZeroException ex)
             {
                 return Json(new { ExceptionMessage = ex.Message });
@@ -227,7 +252,7 @@ namespace TestingNetNetCore.Controllers
             }
 
             w.Stop();
-            a=w.Elapsed;
+            a = w.Elapsed;
             w.Reset();
             w.Start();
 
@@ -237,8 +262,8 @@ namespace TestingNetNetCore.Controllers
             }
 
             w.Stop();
-            b=w.Elapsed;
-            return Json(new {withtrycatch=a, withouttrycatch=b });
+            b = w.Elapsed;
+            return Json(new { withtrycatch = a, withouttrycatch = b });
         }
         #endregion
     }
