@@ -9,31 +9,42 @@
 @using (Html.BeginForm("EditPersonDetail", "NistTutorial", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.PersonalDetailId)
-    <table>
-        <tr>
-            <td colspan="2">
-                Please edit your Data
-            </td>
+<table>
+    <tr>
+        <td colspan="2">
+            Please edit your Data
+        </td>
 
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>@Html.TextBoxFor(x => x.FirstName)</td>
-        </tr>
-        <tr>
-            <td>Address</td>
-            <td>@Html.TextBoxFor(x => x.Address)</td>
-        </tr>
-        <tr>
-            <td>Occupation</td>
-            <td>@Html.TextBoxFor(x => x.Occupation)</td>
-        </tr>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>@Html.TextBoxFor(x => x.FirstName)</td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td>@Html.TextBoxFor(x => x.Address)</td>
+    </tr>
+    <tr>
+        <td>Occupation</td>
+        <td>@Html.TextBoxFor(x => x.Occupation)</td>
+    </tr>
 
+    <tr>
+        @*<td>Download</td>*@
+        @*<td><img src='@Url.Content("~/"+Model.ImageLocation)' /></td>*@
 
+        <td>
+            @if (Model.ImageLocation != null)
+            {
+                <a target="_blank" href='@Url.Content("~/"+Model.ImageLocation)'>Download</a>
+            }
+            @*<img src='@Url.Content("~/"+Model.ImageLocation)' />*@
+        </td>
+    </tr>
 
-        <tr>
-            <td colspan="2"><button type="submit" class="btn btn-secondary">Edit Detail</button></td>
-        </tr>
-    </table>
+    <tr>
+        <td colspan="2"><button type="submit" class="btn btn-secondary">Edit Detail</button></td>
+    </tr>
+</table>
 }
 

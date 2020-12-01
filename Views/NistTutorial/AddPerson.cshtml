@@ -6,7 +6,7 @@
 <h1>Add Person</h1>
 
 
-@using (Html.BeginForm("AddPersonDetail", "NistTutorial", FormMethod.Post))
+@using (Html.BeginForm("AddPersonDetail", "NistTutorial", FormMethod.Post,new { enctype = "multipart/form-data" }))
 {
 
     @Html.ValidationSummary(true)
@@ -39,7 +39,11 @@
                 @Html.ValidationMessageFor(x => x.Occupation)
             </td>
         </tr>
-
+        <tr>
+            <td>Upload Image</td>
+            @*<td><input type="file" name="profile-image" accept="image/.*" /> </td>*@
+            <td><input type="file" name="profile-image" /> </td>
+        </tr>
 
 
         <tr>

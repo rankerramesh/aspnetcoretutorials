@@ -38,8 +38,8 @@ namespace TestingNetNetCore.Models
         public decimal Weight { get; set; }
         public DateTime DOB { get; set; }
 
-        [DisplayName("Profile Image")]
         public string ImageLocation { get; set; }
+
 
         public string ErrorMsg { get; set; }
     }

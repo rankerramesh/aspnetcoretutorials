@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using TestingNetNetCore.Models;
 
@@ -13,9 +15,12 @@ namespace TestingNetNetCore.Controllers
     {
         // GET: /<controller>/
 
+        IWebHostEnvironment _env;
+
         private List<PersonalDetail> people = new List<PersonalDetail>();
-        public NistTutorialController()
+        public NistTutorialController(IWebHostEnvironment env)
         {
+            _env = env;
             people = NistMemory.GetPeople();
         }
         public IActionResult Index()
@@ -35,6 +40,13 @@ namespace TestingNetNetCore.Controllers
         {
             if(ModelState.IsValid)
             {
+                if(Request.Form.Files["profile-image"]!=null)
+                {
+                    string fileSavingPath = Path.Combine(_env.WebRootPath, "uploadedfiles", Request.Form.Files["profile-image"].FileName);
+                    FileStream fs = new FileStream(fileSavingPath, FileMode.Create);
+                    Request.Form.Files["profile-image"].CopyTo(fs);
+                    pd.ImageLocation = Path.Combine("uploadedfiles", Request.Form.Files["profile-image"].FileName); ;
+                }
                 int personCount = people.Count;
                 personCount++;
                 pd.PersonalDetailId = personCount;
